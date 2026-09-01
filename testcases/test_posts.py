@@ -10,6 +10,7 @@ class TestPosts:
         assert response.status_code == 200
         posts = response.json()
         assert len(posts) == 100  # JSONPlaceholder 固定返回 100 条
+        assert all({"userId", "id", "title", "body"} <= post.keys() for post in posts)
 
     @pytest.mark.parametrize("post_id", [1, 2, 3, 10, 50])
     def test_get_post_by_id(self, api_client, post_id):
@@ -30,3 +31,7 @@ class TestPosts:
         }
         response = api_client.post("posts", data=new_post)
         assert response.status_code == 201
+        result = response.json()
+        assert result["title"] == new_post["title"]
+        assert result["body"] == new_post["body"]
+        assert result["userId"] == new_post["userId"]
