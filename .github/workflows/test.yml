@@ -18,7 +18,7 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
       - name: Run tests
-        run:
+        run: |
           mkdir -p test-results/allure-results
           pytest --junitxml=test-results/junit.xml --alluredir=test-results/allure-results
       - name: Upload test reports
